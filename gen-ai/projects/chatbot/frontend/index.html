@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHATBOT</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body class="bg-neutral-900 text-white overflow-x-hidden">
+    <div class="container mx-auto max-w-3xl pb-44 px-2" id="chat-container">
+      <!-- messages goes here -->
+
+      <!-- user message -->
+<!-- 
+      <div class="my-6 bg-neutral-700 p-3 rounded-xl ml-auto max-w-fit">
+        <h1>User Message</h1>
+      </div> -->
+
+      <!-- assistant msg -->
+
+      <!-- <div class="bg-neutral-500 p-3 rounded-xl max-w-fit">
+        <h1>Hi User</h1>
+      </div> -->
+
+      <!-- bottom text area -->
+      <div class="fixed inset-x-0 bottom-0 flex itrems-center justify-center bg-neutral-900 p-3">
+             <div class="bg-neutral-800 p-2 rounded-3xl  w-full my-2 max-w-3xl mb-3" >
+        <textarea name=""  class="w-full resize-none outline-0 p-3" rows="2" id="input"></textarea>
+        <div class="flex justify-end items-center">
+          <button
+            class="bg-white rounded-xl text-black px-4 py-1 cursor-pointer hover:bg-gray-200"
+            id="ask"
+          >
+            Ask
+          </button>
+        </div>
+
+    </div>
+      </div>
+      </div>
+    </div>
+  </body>
+</html>
