@@ -36,7 +36,14 @@ Always follow this pattern: If the answer requires current or real-time informat
     content: userMessage,
   });
   //react loop
+  let count = 0;
+  const MAX_RETRIES = 5;
   while (true) {
+    if (count >= MAX_RETRIES) {
+      return "Sorry, I'm having trouble retrieving the information right now. Please try again later.";
+    }
+    count++;
+
     //tool calling loop
     const completion = await groq.chat.completions.create({
       temperature: 0,
@@ -67,18 +74,28 @@ Always follow this pattern: If the answer requires current or real-time informat
     //after we get the first response from the model,what we will do is we will store the resposne of the model in history
     messages.push(completion.choices[0].message);
     const toolCalls = completion.choices[0].message.tool_calls;
+    log("toolCalls", toolCalls);
     if (!toolCalls) {
       cache.set(threadId, messages);
-      console.log(cache);
+      // console.log(cache);
       //means content is there
       return completion.choices[0].message.content;
     }
     for (const tool of toolCalls) {
-      console.log("tool", tool);
+      // console.log("tool", tool);
       const functionName = tool.function.name;
-      const functionParams = tool.function.arguments;
+      let functionParams = tool.function.arguments;
+      try {
+        functionParams =
+          typeof functionParams === "string"
+            ? JSON.parse(functionParams)
+            : functionParams;
+      } catch (err) {
+        console.error("Error parsing tool arguments:", err);
+        functionParams = {};
+      }
       if (functionName == "webSearch") {
-        const toolResult = await webSearch(JSON.parse(functionParams));
+        const toolResult = await webSearch(functionParams);
         // console.log("Tool Result: ", toolResult);
         messages.push({
           tool_call_id: tool.id,
@@ -126,6 +143,6 @@ async function webSearch({ query }) {
   const finalResult = response.results
     .map((result) => result.content)
     .join("\n\n");
-  console.log(finalResult);
+  // console.log(finalResult);
   return finalResult;
 }

@@ -19,8 +19,13 @@ app.post("/chat", async (req, res) => {
   if (!message || !threadId) {
     return res.status(400).json({ error: "All fields are required" });
   }
-  const result = await generate(message, threadId);
-  res.json({ message: result });
+  try {
+    const result = await generate(message, threadId);
+    res.json({ message: result });
+  } catch (err) {
+    console.error("Server Error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(PORT, () => {

@@ -26,6 +26,7 @@ async function generate(text) {
   //   </div>
 
   chatContainer.appendChild(loading);
+  askBtn.classList.add("opacity-50", "cursor-not-allowed");
   //call server
   const assistantMessage = await callServer(text);
 
@@ -34,11 +35,11 @@ async function generate(text) {
   assistantMsgElem.textContent = assistantMessage;
 
   loading.remove();
-
+  askBtn.classList.remove("opacity-50", "cursor-not-allowed");
   chatContainer?.appendChild(assistantMsgElem);
 }
 async function callServer(inputText) {
-  console.log("calling server");
+  // console.log("calling server");
 
   const response = await fetch("http://localhost:3001/chat", {
     method: "POST",
