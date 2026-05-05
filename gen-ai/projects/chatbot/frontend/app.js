@@ -39,9 +39,9 @@ async function generate(text) {
   chatContainer?.appendChild(assistantMsgElem);
 }
 async function callServer(inputText) {
-  // console.log("calling server");
-
-  const response = await fetch("http://localhost:3001/chat", {
+  // Use backend URL from config.js
+  const apiUrl = (window.BACKEND_API_URL || "http://localhost:3001") + "/chat";
+  const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
