@@ -2,9 +2,11 @@
 
 This folder contains the source code for the `react-agent` module.
 
+> **Note:** The term "react-agent" here stands for **Reasoning + Act** agent. This module is focused on agent-based logic for reasoning and action workflows.
+
 ## Overview
 
-The `react-agent` module is designed to provide agent-based functionality for React applications. It includes the main agent logic and entry point for integration with other parts of the project.
+The `react-agent` module is designed to provide agent-based functionality for Reasoning + Act workflows. It includes the main agent logic and entry point for integration with other parts of the project.
 
 ## File Structure
 
