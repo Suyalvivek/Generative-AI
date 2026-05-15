@@ -102,7 +102,12 @@ const graph = new StateGraph(State)
 .addNode("tools",toolNode)
 .addEdge(START,"llm")
 .addEdge("tools","llm")
-.addConditionalEdges("llm",shouldContinue);
+.addConditionalEdges("llm",shouldContinue,{
+  //mapping
+  __end:END,
+  tools:'tools'
+}
+);
 
 const app = graph.compile({checkpointer});
 
