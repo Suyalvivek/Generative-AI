@@ -5,7 +5,7 @@
  * Add the memory
  **/
 import readline from 'node:readline/promises';
-import{StateGraph,StateSchema,MessagesValue,START,END} from "@langchain/langgraph";
+import{StateGraph,StateSchema,MessagesValue,START,END, MemorySaver} from "@langchain/langgraph";
 import {ChatGroq} from '@langchain/groq';
 import { tool } from "@langchain/core/tools";
 import { ToolNode } from "@langchain/langgraph/prebuilt";
@@ -13,7 +13,8 @@ import { TavilySearch } from "@langchain/tavily";
 import { z } from "zod";
 import { printGraph } from "./utils.js";
 
-
+// memory
+const checkpointer = new MemorySaver();
 
 
  const search = new TavilySearch({
@@ -103,9 +104,10 @@ const graph = new StateGraph(State)
 .addEdge("tools","llm")
 .addConditionalEdges("llm",shouldContinue);
 
-const app = graph.compile();
+const app = graph.compile({checkpointer});
 
 async function main(){
+  let config ={configurable:{thread_id:'conversation-num-1'}};
   await printGraph(app,'./customGraph.png')
   // take user input
 
@@ -125,7 +127,7 @@ async function main(){
         }],
 
 
-    })
+    },config);
     // console.log("result",result);
     const messages = result.messages;
     const final = messages[messages.length-1];
